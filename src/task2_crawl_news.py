@@ -13,7 +13,17 @@ def setup_directory():
 
 
 # Danh sách URL bài viết hỗ trợ trên Shopee Help Center & Shopee Uni
+ARTICLE_URLS = [
+    "https://help.shopee.vn/portal/4/article/79140",
+    "https://help.shopee.vn/portal/4/article/79244",
+    "https://help.shopee.vn/portal/4/article/79247",
+    "https://help.shopee.vn/portal/4/article/79250",
+    "https://banhang.shopee.vn/edu/article/13247",
+    "https://help.shopee.vn/portal/4/article/77251",
+]
+
 SHOPEE_ARTICLES = [
+
     {
         "url": "https://help.shopee.vn/portal/4/article/79140",
         "title": "[Thành viên mới] Shop Yêu Thích / Shop Yêu Thích+ trên Shopee là gì?",
