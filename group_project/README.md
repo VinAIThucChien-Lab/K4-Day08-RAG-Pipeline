@@ -107,8 +107,8 @@ User Query
 
 | Thành viên | Vị trí / Role | Nhiệm vụ đảm nhận | Trạng thái |
 |---|---|---|:---:|
-| **Kiều Hồng Phong** | Leader & RAG Architect | Quản lý pipeline chính (`task9`), Reordering & Chatbot UI | ✅ Hoàn thành |
-| **Lê Mai Việt Hoàng** | Dense & Vector Specialist | Chunking & Indexing ChromaDB (`task4`), Semantic Search (`task5`) | ✅ Hoàn thành |
+| **Kiều Hồng Phong** | RAG Architect | Quản lý pipeline chính (`task9`), Reordering & Chatbot UI | ✅ Hoàn thành |
+| **Lê Mai Việt Hoàng** | Dense & Vector Specialist (Lead)| Chunking & Indexing ChromaDB (`task4`), Semantic Search (`task5`) | ✅ Hoàn thành |
 | **Đỗ Duy Đức** | Data Engineering Specialist | Thu thập chính sách (`task1`), convert Markdown (`task3`) | ✅ Hoàn thành |
 | **Nguyễn Đức Đạt** | Sparse & Reranking Specialist | BM25 Lexical Search (`task6`), RRF Reranking (`task7`) | ✅ Hoàn thành |
 | **Vũ Nguyễn Bảo Sơn** | Evaluation & QA Specialist | Fallback PageIndex (`task8`), RAGAS Evaluation Benchmark (`eval_pipeline`) | ✅ Hoàn thành |
