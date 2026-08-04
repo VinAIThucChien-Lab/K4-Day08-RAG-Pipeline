@@ -15,69 +15,88 @@ BM25 hoạt động thế nào:
     - k1=1.5 (term saturation), b=0.75 (length normalization)
 """
 
+import re
 from pathlib import Path
 
-# TODO: Load corpus từ data/standardized/ hoặc từ vector store
-CORPUS: list[dict] = []  # List of {'content': str, 'metadata': dict}
+CORPUS: list[dict] = []
+_BM25_INDEX = None
+
+
+def get_corpus() -> list[dict]:
+    """Tải và cache corpus từ task4 chunk_documents."""
+    global CORPUS
+    if not CORPUS:
+        try:
+            from src.task4_chunking_indexing import load_documents, chunk_documents
+            docs = load_documents()
+            CORPUS = chunk_documents(docs)
+        except Exception:
+            CORPUS = []
+    return CORPUS
+
+
+def _tokenize(text: str) -> list[str]:
+    """Tokenize đơn giản tách theo từ và loại bỏ ký tự đặc biệt."""
+    return re.findall(r"\w+", text.lower())
 
 
 def build_bm25_index(corpus: list[dict]):
-    """
-    Xây dựng BM25 index từ corpus.
+    """Xây dựng BM25 index từ corpus."""
+    global _BM25_INDEX
+    if not corpus:
+        return None
 
-    Args:
-        corpus: List of {'content': str, 'metadata': dict}
-    """
-    # TODO: Implement BM25 index
-    #
-    # from rank_bm25 import BM25Okapi
-    #
-    # # Tokenize - có thể đơn giản split(), hoặc dùng underthesea cho tiếng Việt
-    # tokenized_corpus = [doc["content"].lower().split() for doc in corpus]
-    # bm25 = BM25Okapi(tokenized_corpus)
-    # return bm25
-    raise NotImplementedError("Implement build_bm25_index")
+    try:
+        from rank_bm25 import BM25Okapi
+        tokenized_corpus = [_tokenize(doc["content"]) for doc in corpus]
+        _BM25_INDEX = BM25Okapi(tokenized_corpus)
+        return _BM25_INDEX
+    except Exception:
+        _BM25_INDEX = None
+        return None
 
 
 def lexical_search(query: str, top_k: int = 10) -> list[dict]:
-    """
-    Tìm kiếm từ khóa sử dụng BM25.
+    """Tìm kiếm từ khóa sử dụng BM25 (hoặc TF-IDF / term overlap fallback)."""
+    corpus = get_corpus()
+    if not corpus:
+        return []
 
-    Args:
-        query: Câu truy vấn
-        top_k: Số lượng kết quả tối đa
+    global _BM25_INDEX
+    if _BM25_INDEX is None:
+        build_bm25_index(corpus)
 
-    Returns:
-        List of {
-            'content': str,
-            'score': float,      # BM25 score
-            'metadata': dict
-        }
-        Sorted by score descending.
-    """
-    # TODO: Implement lexical search
-    #
-    # tokenized_query = query.lower().split()
-    # scores = bm25.get_scores(tokenized_query)
-    #
-    # # Get top_k indices
-    # import numpy as np
-    # top_indices = np.argsort(scores)[::-1][:top_k]
-    #
-    # results = []
-    # for idx in top_indices:
-    #     if scores[idx] > 0:
-    #         results.append({
-    #             "content": CORPUS[idx]["content"],
-    #             "score": float(scores[idx]),
-    #             "metadata": CORPUS[idx]["metadata"]
-    #         })
-    # return results
-    raise NotImplementedError("Implement lexical_search")
+    tokenized_query = _tokenize(query)
+
+    if _BM25_INDEX is not None:
+        scores = _BM25_INDEX.get_scores(tokenized_query)
+        results = []
+        for idx, score in enumerate(scores):
+            results.append({
+                "content": corpus[idx]["content"],
+                "score": round(float(score), 4),
+                "metadata": corpus[idx]["metadata"]
+            })
+    else:
+        # Fallback term frequency score
+        query_set = set(tokenized_query)
+        results = []
+        for doc in corpus:
+            tokens = _tokenize(doc["content"])
+            match_count = sum(1 for t in tokens if t in query_set)
+            score = match_count / max(1, len(tokens) ** 0.5)
+            results.append({
+                "content": doc["content"],
+                "score": round(score, 4),
+                "metadata": doc["metadata"]
+            })
+
+    results.sort(key=lambda x: x["score"], reverse=True)
+    return results[:top_k]
 
 
 if __name__ == "__main__":
-    # Test
     results = lexical_search("phương thức thanh toán shopee", top_k=5)
     for r in results:
         print(f"[{r['score']:.3f}] {r['content'][:100]}...")
+

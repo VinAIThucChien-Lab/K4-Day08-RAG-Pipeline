@@ -1309,6 +1309,7 @@ dependencies = [
     { name = "numpy" },
     { name = "openai" },
     { name = "pageindex" },
+    { name = "pytest" },
     { name = "python-dotenv" },
     { name = "ragas" },
     { name = "rank-bm25" },
@@ -1317,11 +1318,6 @@ dependencies = [
     { name = "sentence-transformers", version = "2.2.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12.4' and sys_platform == 'win32'" },
     { name = "sentence-transformers", version = "5.6.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12.4' or sys_platform != 'win32'" },
     { name = "streamlit" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest" },
 ]
 
 [package.metadata]
@@ -1336,6 +1332,7 @@ requires-dist = [
     { name = "numpy", specifier = ">=1.24.0" },
     { name = "openai", specifier = ">=1.30.0" },
     { name = "pageindex", specifier = ">=0.1.0" },
+    { name = "pytest", specifier = ">=7.0.0" },
     { name = "python-dotenv", specifier = ">=1.0.0" },
     { name = "ragas", specifier = "==0.1.21" },
     { name = "rank-bm25", specifier = ">=0.2.2" },
@@ -1344,9 +1341,6 @@ requires-dist = [
     { name = "sentence-transformers", specifier = ">=2.2.0" },
     { name = "streamlit", specifier = ">=1.35.0" },
 ]
-
-[package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=7.0.0" }]
 
 [[package]]
 name = "kubernetes"

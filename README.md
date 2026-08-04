@@ -605,7 +605,7 @@ Từ thư mục gốc của project:
 uv sync
 ```
 
-Lệnh này tự cài đúng phiên bản Python nếu cần, tạo `.venv/` và cài toàn bộ dependencies, bao gồm dependency phục vụ test.
+Lệnh này tự cài đúng phiên bản Python nếu cần, tạo `.venv/` và cài đúng các dependency được khai báo trong `requirements.txt`/`pyproject.toml` cùng các dependency bắc cầu bắt buộc của chúng. Project không khai báo thêm nhóm dependency tùy chọn.
 
 ### 3. Cấu hình biến môi trường
 
