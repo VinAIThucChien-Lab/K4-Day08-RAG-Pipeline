@@ -569,13 +569,11 @@ run_dashboard()
 ### Hướng Dẫn Chạy
 
 ```bash
-# Cài đặt dependencies
-pip install -r requirements.txt
+# Cài đặt Python và dependencies theo uv.lock
+uv sync
 
 # Chạy app
-streamlit run app.py
-# hoặc
-chainlit run app.py
+uv run streamlit run app.py
 ```
 
 ---
@@ -588,15 +586,50 @@ Hãy giữ lại repo này nếu như bạn học track 3 giai đoạn 2, chúng
 
 ## Cài Đặt Môi Trường
 
+Project sử dụng [uv](https://docs.astral.sh/uv/) để quản lý phiên bản Python, virtual environment và dependencies. Phiên bản Python được ghim trong `.python-version`; danh sách dependencies nằm trong `pyproject.toml` và được khóa bởi `uv.lock`.
+
+### 1. Cài uv
+
+Nếu máy chưa có `uv`, xem hướng dẫn cài đặt chính thức hoặc chạy:
+
 ```bash
-pip install -r requirements.txt
+# macOS/Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Tạo file `.env` từ `.env.example`:
+### 2. Khởi tạo môi trường
+
+Từ thư mục gốc của project:
+
+```bash
+uv sync
+```
+
+Lệnh này tự cài đúng phiên bản Python nếu cần, tạo `.venv/` và cài toàn bộ dependencies, bao gồm dependency phục vụ test.
+
+### 3. Cấu hình biến môi trường
+
 ```bash
 cp .env.example .env
 # Điền API keys vào .env
 ```
+
+Ít nhất hãy cấu hình `OPENROUTER_API_KEY` để chạy bước generation. `PAGEINDEX_API_KEY` và `JINA_API_KEY` chỉ cần khi sử dụng các tích hợp tương ứng.
+
+### 4. Chạy ứng dụng và test
+
+```bash
+# Streamlit chatbot
+uv run streamlit run app.py
+
+# Toàn bộ test
+uv run pytest tests/ -v
+
+# Một task cụ thể
+uv run pytest tests/test_individual.py::TestTask1 -v
+```
+
+Khi thêm hoặc xóa package, dùng `uv add <package>` hoặc `uv remove <package>` và commit cả `pyproject.toml` lẫn `uv.lock`.
 
 ---
 
