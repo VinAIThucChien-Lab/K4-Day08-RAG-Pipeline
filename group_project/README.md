@@ -70,36 +70,80 @@ Xem code mẫu (DeepEval/RAGAS/TruLens) chi tiết trong `README.md` gốc mục
 ## Kiến Trúc Hệ Thống
 
 ```
-[Vẽ diagram kiến trúc ở đây]
+User Query
+    │
+    ▼
+┌──────────────────────────────────────────────────────────┐
+│                   Hybrid Search Engine                   │
+│   ┌────────────────────────┐   ┌─────────────────────┐   │
+│   │ Dense Retrieval        │   │ Sparse Retrieval    │   │
+│   │ (ChromaDB + Cosine)    │   │ (BM25Okapi Keyword) │   │
+│   └───────────┬────────────┘   └──────────┬──────────┘   │
+└───────────────┼───────────────────────────┼──────────────┘
+                └─────────────┬─────────────┘
+                              ▼
+┌──────────────────────────────────────────────────────────┐
+│                 RRF Reranking (k = 60)                   │
+└─────────────────────────────┬────────────────────────────┘
+                              ▼
+               [Cosine Score < 0.48 Threshold?]
+               ├── Yes ──► PageIndex Vectorless Fallback
+               └── No  ──► Top-K Chunks
+                              │
+                              ▼
+┌──────────────────────────────────────────────────────────┐
+│                Document Reordering (Task 10)             │
+│            Mitigating "Lost in the Middle" Effect        │
+└─────────────────────────────┬────────────────────────────┘
+                              ▼
+┌──────────────────────────────────────────────────────────┐
+│                LLM Generation (Citation)                 │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ---
 
 ## Phân Công Công Việc
 
-| Thành viên | MSSV | Nhiệm vụ | Trạng thái |
-|-----------|------|----------|------------|
-| | | | |
-| | | | |
-| | | | |
-| | | | |
+| Thành viên | Vị trí / Role | Nhiệm vụ đảm nhận | Trạng thái |
+|---|---|---|:---:|
+| **Kiều Hồng Phong** | RAG Architect | Quản lý pipeline chính (`task9`), Reordering & Chatbot UI | ✅ Hoàn thành |
+| **Lê Mai Việt Hoàng** | Dense & Vector Specialist (Lead)| Chunking & Indexing ChromaDB (`task4`), Semantic Search (`task5`) | ✅ Hoàn thành |
+| **Đỗ Duy Đức** | Data Engineering Specialist | Thu thập chính sách (`task1`), convert Markdown (`task3`) | ✅ Hoàn thành |
+| **Nguyễn Đức Đạt** | Sparse & Reranking Specialist | BM25 Lexical Search (`task6`), RRF Reranking (`task7`) | ✅ Hoàn thành |
+| **Vũ Nguyễn Bảo Sơn** | Evaluation & QA Specialist | Fallback PageIndex (`task8`), RAGAS Evaluation Benchmark (`eval_pipeline`) | ✅ Hoàn thành |
 
 ---
 
-## Hướng Dẫn Chạy
+## Hướng Dẫn Chạy Dự Án
 
-```bash
-# Cài đặt dependencies
-pip install -r requirements.txt
+### 1. Chuẩn bị Môi trường & Khởi tạo Vector DB
+```powershell
+# Chạy chuyển đổi dữ liệu thô sang Markdown
+uv run python -m src.task3_convert_markdown
 
-# Chạy app
-streamlit run app.py
-# hoặc
-chainlit run app.py
+# Cắt đoạn (Chunking) và nạp dữ liệu vào ChromaDB
+uv run python -X utf8 src/task4_chunking_indexing.py
+```
+
+### 2. Chạy Ứng Dụng Chatbot (Streamlit UI)
+```powershell
+uv run streamlit run app.py
+```
+
+### 3. Chạy Kiểm Thử Unit Tests (Tất cả 35 Task cá nhân)
+```powershell
+uv run pytest tests/test_individual.py
+```
+
+### 4. Thực Thi RAGAS Evaluation & A/B Benchmark (Bài Nhóm)
+```powershell
+uv run python -X utf8 -m group_project.evaluation.eval_pipeline
 ```
 
 ---
 
-## Lưu ý
+## Lưu Ý
+- Kết quả Đánh giá Benchmark chi tiết được tự động xuất tại: [group_project/evaluation/results.md](file:///d:/AIThucchien/K4-Day08-RAG-Pipeline/group_project/evaluation/results.md)
 
 Hãy giữ lại repo này nếu như bạn học track 3 giai đoạn 2, chúng ta sẽ phát triển tiếp dự án lên knowledge graph để khắc phục các câu hỏi hóc búa khi có các câu hỏi khó.

@@ -10,10 +10,10 @@
 
 | Metric | Điểm số (0.0 - 1.0) | Đánh giá chất lượng |
 | :--- | :---: | :--- |
-| **Faithfulness** | `0.9258` | Câu trả lời bám sát 100% nội dung tài liệu trích dẫn. |
-| **Answer Relevancy** | `1.0000` | Phản hồi đúng trọng tâm câu hỏi của người dùng. |
-| **Context Recall** | `0.8728` | Lấy đủ bằng chứng tài liệu từ cơ sở tri thức. |
-| **Context Precision** | `1.0000` | Tỉ lệ các chunk thực sự hữu ích trong top_k. |
+| **Faithfulness** | `0.9403` | Câu trả lời bám sát 100% nội dung tài liệu trích dẫn. |
+| **Answer Relevancy** | `0.9733` | Phản hồi đúng trọng tâm câu hỏi của người dùng. |
+| **Context Recall** | `0.9137` | Lấy đủ bằng chứng tài liệu từ cơ sở tri thức. |
+| **Context Precision** | `0.9867` | Tỉ lệ các chunk thực sự hữu ích trong top_k. |
 
 ---
 
@@ -21,10 +21,10 @@
 
 | Metric | Config A: Hybrid + RRF Reranking | Config B: Dense-Only (Không Rerank) | Chênh lệch |
 | :--- | :---: | :---: | :---: |
-| **Faithfulness** | **0.9258** | 1.0000 | +-0.0742 |
-| **Answer Relevancy** | **1.0000** | 0.8832 | +0.1168 |
-| **Context Recall** | **0.8728** | 0.8728 | +0.0000 |
-| **Context Precision** | **1.0000** | 1.0000 | +0.0000 |
+| **Faithfulness** | **0.9403** | 1.0000 | +-0.0597 |
+| **Answer Relevancy** | **0.9733** | 0.8203 | +0.1530 |
+| **Context Recall** | **0.9137** | 0.9137 | +0.0000 |
+| **Context Precision** | **0.9867** | 0.9867 | +0.0000 |
 
 > 💡 **Nhận xét A/B Testing:**  
 > Config A (**Hybrid Search + RRF Reranking**) vượt trội hơn Config B (**Dense-Only**) ở cả 4 chỉ số. Việc kết hợp BM25 Keyword Search cùng RRF Reranking giúp tăng độ chính xác trích xuất từ khóa mã voucher/chính sách và tránh bị sót thông tin.
@@ -35,18 +35,18 @@
 
 | ID | Câu hỏi kiểm thử | Faithfulness | Relevancy | Recall | Precision | Status |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| 1 | Thời hạn yêu cầu trả hàng/hoàn tiền là bao lâ... | 0.92 | 1.00 | 0.82 | 1.00 | ✅ PASS |
-| 2 | Shopee hỗ trợ những phương thức thanh toán nà... | 0.84 | 1.00 | 0.67 | 1.00 | ✅ PASS |
-| 3 | Hạn mức thanh toán bằng phương thức COD trên ... | 0.79 | 1.00 | 0.60 | 1.00 | ✅ PASS |
-| 4 | Người bán phải làm gì để đăng bán các sản phẩ... | 0.67 | 1.00 | 0.60 | 1.00 | ✅ PASS |
-| 5 | Shopee bảo vệ thông tin cá nhân của người dùn... | 0.67 | 1.00 | 0.60 | 1.00 | ✅ PASS |
+| 1 | Thời hạn yêu cầu trả hàng/hoàn tiền là bao lâ... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
+| 2 | Shopee hỗ trợ những phương thức thanh toán nà... | 0.92 | 1.00 | 0.83 | 1.00 | ✅ PASS |
+| 3 | Hạn mức thanh toán bằng phương thức COD trên ... | 0.97 | 1.00 | 0.79 | 0.80 | ✅ PASS |
+| 4 | Người bán phải làm gì để đăng bán các sản phẩ... | 0.86 | 1.00 | 0.80 | 1.00 | ✅ PASS |
+| 5 | Shopee bảo vệ thông tin cá nhân của người dùn... | 0.86 | 1.00 | 0.81 | 1.00 | ✅ PASS |
 | 6 | Shop Yêu Thích và Shop Yêu Thích+ trên Shopee... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
 | 7 | Người mua nhận được quyền lợi gì khi mua sắm ... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
 | 8 | Làm thế nào để tìm kiếm sản phẩm bằng hình ản... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
-| 9 | Các bộ lọc tìm kiếm nâng cao trên Shopee gồm ... | 1.00 | 1.00 | 0.80 | 1.00 | ✅ PASS |
+| 9 | Các bộ lọc tìm kiếm nâng cao trên Shopee gồm ... | 0.50 | 0.60 | 0.60 | 1.00 | ✅ PASS |
 | 10 | Các loại Voucher chính trên Shopee bao gồm nh... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
 | 11 | Các bước áp dụng mã giảm giá khi đặt hàng trê... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
-| 12 | Làm sao để giảm cước phí vận chuyển khi mua h... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
+| 12 | Làm sao để giảm cước phí vận chuyển khi mua h... | 1.00 | 1.00 | 0.88 | 1.00 | ✅ PASS |
 | 13 | Ngành hàng Thực phẩm & Đồ uống yêu cầu những ... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
 | 14 | Điều kiện để gửi yêu cầu Trả hàng / Hoàn tiền... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
 | 15 | Quy trình thao tác gửi yêu cầu Trả hàng/Hoàn ... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
