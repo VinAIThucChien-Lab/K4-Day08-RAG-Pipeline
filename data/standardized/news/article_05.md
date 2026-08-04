@@ -2,7 +2,7 @@
 
 **Source:** https://banhang.shopee.vn/edu/article/13247
 **Customer Role:** seller
-**Crawled:** 2026-08-04T05:25:09.131198
+**Crawled:** 2026-08-04T08:18:36.000989
 
 ---
 

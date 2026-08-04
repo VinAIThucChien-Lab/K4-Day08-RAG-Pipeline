@@ -10,7 +10,7 @@
 
 | Metric | Điểm số (0.0 - 1.0) | Đánh giá chất lượng |
 | :--- | :---: | :--- |
-| **Faithfulness** | `0.9258` | Câu trả lời bám sát 100% nội dung tài liệu trích dẫn. |
+| **Faithfulness** | `0.9320` | Câu trả lời bám sát 100% nội dung tài liệu trích dẫn. |
 | **Answer Relevancy** | `1.0000` | Phản hồi đúng trọng tâm câu hỏi của người dùng. |
 | **Context Recall** | `0.8728` | Lấy đủ bằng chứng tài liệu từ cơ sở tri thức. |
 | **Context Precision** | `1.0000` | Tỉ lệ các chunk thực sự hữu ích trong top_k. |
@@ -21,7 +21,7 @@
 
 | Metric | Config A: Hybrid + RRF Reranking | Config B: Dense-Only (Không Rerank) | Chênh lệch |
 | :--- | :---: | :---: | :---: |
-| **Faithfulness** | **0.9258** | 1.0000 | +-0.0742 |
+| **Faithfulness** | **0.9320** | 1.0000 | +-0.0680 |
 | **Answer Relevancy** | **1.0000** | 0.8832 | +0.1168 |
 | **Context Recall** | **0.8728** | 0.8728 | +0.0000 |
 | **Context Precision** | **1.0000** | 1.0000 | +0.0000 |
@@ -35,11 +35,11 @@
 
 | ID | Câu hỏi kiểm thử | Faithfulness | Relevancy | Recall | Precision | Status |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: |
-| 1 | Thời hạn yêu cầu trả hàng/hoàn tiền là bao lâ... | 0.92 | 1.00 | 0.82 | 1.00 | ✅ PASS |
+| 1 | Thời hạn yêu cầu trả hàng/hoàn tiền là bao lâ... | 0.91 | 1.00 | 0.82 | 1.00 | ✅ PASS |
 | 2 | Shopee hỗ trợ những phương thức thanh toán nà... | 0.84 | 1.00 | 0.67 | 1.00 | ✅ PASS |
-| 3 | Hạn mức thanh toán bằng phương thức COD trên ... | 0.79 | 1.00 | 0.60 | 1.00 | ✅ PASS |
-| 4 | Người bán phải làm gì để đăng bán các sản phẩ... | 0.67 | 1.00 | 0.60 | 1.00 | ✅ PASS |
-| 5 | Shopee bảo vệ thông tin cá nhân của người dùn... | 0.67 | 1.00 | 0.60 | 1.00 | ✅ PASS |
+| 3 | Hạn mức thanh toán bằng phương thức COD trên ... | 0.80 | 1.00 | 0.60 | 1.00 | ✅ PASS |
+| 4 | Người bán phải làm gì để đăng bán các sản phẩ... | 0.72 | 1.00 | 0.60 | 1.00 | ✅ PASS |
+| 5 | Shopee bảo vệ thông tin cá nhân của người dùn... | 0.71 | 1.00 | 0.60 | 1.00 | ✅ PASS |
 | 6 | Shop Yêu Thích và Shop Yêu Thích+ trên Shopee... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
 | 7 | Người mua nhận được quyền lợi gì khi mua sắm ... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |
 | 8 | Làm thế nào để tìm kiếm sản phẩm bằng hình ản... | 1.00 | 1.00 | 1.00 | 1.00 | ✅ PASS |

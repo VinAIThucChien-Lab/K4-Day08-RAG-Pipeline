@@ -2,7 +2,7 @@
 
 **Source:** https://help.shopee.vn/portal/4/article/77251
 **Customer Role:** both
-**Crawled:** 2026-08-04T05:25:09.131592
+**Crawled:** 2026-08-04T08:18:36.001448
 
 ---
 
