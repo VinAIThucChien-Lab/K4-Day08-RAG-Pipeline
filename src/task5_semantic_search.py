@@ -15,19 +15,28 @@ from pathlib import Path
 CHROMA_DIR = Path(__file__).parent.parent / "chroma_db"
 COLLECTION_NAME = "ecommerce_support_docs"
 
+_COLLECTION = None
+
+
+def get_collection():
+    """Cache ChromaDB Collection để tăng tốc truy vấn."""
+    global _COLLECTION
+    if _COLLECTION is None and CHROMA_DIR.exists():
+        import chromadb
+        client = chromadb.PersistentClient(path=str(CHROMA_DIR))
+        _COLLECTION = client.get_collection(name=COLLECTION_NAME)
+    return _COLLECTION
+
 
 def semantic_search(query: str, top_k: int = 10) -> list[dict]:
     """
     Tìm kiếm ngữ nghĩa sử dụng vector similarity.
     """
     try:
-        import chromadb
         from src.task4_chunking_indexing import get_embedding_model
+        collection = get_collection()
 
-        if CHROMA_DIR.exists():
-            client = chromadb.PersistentClient(path=str(CHROMA_DIR))
-            collection = client.get_collection(name=COLLECTION_NAME)
-
+        if collection is not None:
             model = get_embedding_model()
             if model is not None:
                 query_vector = model.encode(query).tolist()
