@@ -114,17 +114,40 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
 
     retrieval_src = chunks[0].get("source", "hybrid") if chunks else "none"
 
-    api_key = os.getenv("OPENROUTER_API_KEY") or os.getenv("OPENAI_API_KEY") or os.getenv("GEMINI_API_KEY")
+    openrouter_key = os.getenv("OPENROUTER_API_KEY", "").strip()
+    openai_key = os.getenv("OPENAI_API_KEY", "").strip()
+    gemini_key = os.getenv("GEMINI_API_KEY", "").strip()
+
+    # Filter out placeholder keys like "sk-or-v1-..."
+    if openrouter_key.endswith("..."):
+        openrouter_key = ""
+    if openai_key.endswith("..."):
+        openai_key = ""
+
+    api_key = None
+    base_url = None
+    model_name = LLM_MODEL
+
+    if openrouter_key:
+        api_key = openrouter_key
+        base_url = "https://openrouter.ai/api/v1"
+        model_name = LLM_MODEL if "/" in LLM_MODEL else f"openai/{LLM_MODEL}"
+    elif openai_key:
+        api_key = openai_key
+        base_url = None
+        # Direct OpenAI API uses model name like "gpt-4o-mini" without prefix
+        model_name = LLM_MODEL.split("/")[-1]
+    elif gemini_key:
+        api_key = gemini_key
 
     if api_key:
         try:
             from openai import OpenAI
-            base_url = "https://openrouter.ai/api/v1" if os.getenv("OPENROUTER_API_KEY") else None
             client = OpenAI(api_key=api_key, base_url=base_url)
 
             user_message = f"Context:\n{context}\n\n---\n\nQuestion: {query}"
             response = client.chat.completions.create(
-                model=LLM_MODEL,
+                model=model_name,
                 messages=[
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": user_message}
@@ -142,27 +165,34 @@ def generate_with_citation(query: str, top_k: int = TOP_K) -> dict:
         except Exception as e:
             print(f"⚠ LLM API call error ({e}), generating synthesized citation response.")
 
+
     # Offline / Fallback synthesized response generation with citations
-    if not chunks or (len(chunks) > 0 and chunks[0].get("score", 0) < 0.1):
+    if not chunks:
         answer = "Tôi không thể xác minh thông tin này từ nguồn hiện có."
     else:
-        cited_sources = set()
         ans_paragraphs = []
         for c in chunks[:3]:
             src = c.get("metadata", {}).get("source", "Shopee Policy")
-            cited_sources.add(src)
-            clean_text = c.get("content", "").replace("\n", " ").strip()
-            if len(clean_text) > 150:
-                clean_text = clean_text[:150] + "..."
-            ans_paragraphs.append(f"{clean_text} [{src}, 2026]")
+            content_text = c.get("content", "").strip()
 
-        answer = "\n\n".join(ans_paragraphs)
+            # Filter out raw metadata headers and empty lines
+            lines = [
+                l for l in content_text.split("\n")
+                if l.strip() and not l.startswith("**Source:**") and not l.startswith("**Crawled:**") and not l.startswith("**Customer Role:**") and l.strip() != "---"
+            ]
+            if lines:
+                body_text = "\n".join(lines[:6])
+                ans_paragraphs.append(f"{body_text} [{src}, 2026]")
+
+        answer = "\n\n".join(ans_paragraphs) if ans_paragraphs else "Tôi không thể xác minh thông tin này từ nguồn hiện có."
 
     return {
         "answer": answer,
         "sources": chunks,
         "retrieval_source": retrieval_src
     }
+
+
 
 
 if __name__ == "__main__":
