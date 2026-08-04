@@ -1,17 +1,77 @@
 [
   {
-    "question": "Người mua có thể yêu cầu trả hàng/hoàn tiền trong thời hạn bao lâu sau khi nhận hàng?",
-    "expected_answer": "Trong vòng 15 ngày kể từ khi giao hàng thành công (24 giờ đối với thực phẩm tươi sống/đông lạnh).",
-    "expected_context": "Trang Returns and Refunds Policy, mục Return/Refund Eligibility"
+    "question": "Thời hạn yêu cầu trả hàng/hoàn tiền là bao lâu sau khi nhận hàng?",
+    "expected_answer": "Đối với Shopee Mall, người mua có 15 ngày kể từ khi nhận hàng. Đối với Shop Thường, người mua có 3 ngày kể từ khi đơn hàng cập nhật trạng thái Đã giao hàng.",
+    "expected_context": "returns-refund-policy-shopee.pdf"
   },
   {
     "question": "Shopee hỗ trợ những phương thức thanh toán nào?",
-    "expected_answer": "ShopeePay Wallet, thẻ tín dụng/ghi nợ, trả góp qua thẻ, QR Code, chuyển khoản qua app ngân hàng, thẻ NAPAS, Apple Pay, Google Pay, và COD.",
-    "expected_context": "Trang Payment Methods Overview"
+    "expected_answer": "Shopee hỗ trợ Thanh toán khi nhận hàng (COD), Ví điện tử ShopeePay, Thẻ Tín dụng / Thẻ Ghi nợ (Visa, Mastercard, JCB), Chuyển khoản ngân hàng và SPayLater (Mua trước trả sau).",
+    "expected_context": "payment-methods-shopee.pdf"
   },
   {
-    "question": "Người bán không được đăng bán những sản phẩm nào?",
-    "expected_answer": "Hàng giả/nhái, sản phẩm bất hợp pháp, vi phạm sở hữu trí tuệ, và các mặt hàng nằm trong danh sách cấm của sàn.",
-    "expected_context": "Trang Product Listing Regulations, mục Prohibited Content"
+    "question": "Hạn mức thanh toán bằng phương thức COD trên Shopee là bao nhiêu?",
+    "expected_answer": "Phương thức COD chi áp dụng cho các đơn hàng có giá trị dưới 20.000.000 VNĐ.",
+    "expected_context": "payment-methods-shopee.pdf"
+  },
+  {
+    "question": "Người bán phải làm gì để đăng bán các sản phẩm thuộc ngành hàng kinh doanh có điều kiện?",
+    "expected_answer": "Người bán phải cung cấp Giấy phép kinh doanh, Giấy xác nhận công bố sản phẩm hoặc Chứng nhận an toàn thực phẩm, sau đó tải bản scan lên hệ thống để Shopee duyệt trước khi hiển thị sản phẩm.",
+    "expected_context": "product-listing-regulations-shopee.pdf"
+  },
+  {
+    "question": "Shopee bảo vệ thông tin cá nhân của người dùng như thế nào?",
+    "expected_answer": "Shopee cam kết không chia sẻ hay bán thông tin cá nhân cho bên thứ ba khi chưa được sự đồng ý, và dữ liệu được mã hóa theo chuẩn an ninh SSL/TLS.",
+    "expected_context": "privacy-policy-shopee.pdf"
+  },
+  {
+    "question": "Shop Yêu Thích và Shop Yêu Thích+ trên Shopee là gì?",
+    "expected_answer": "Đây là danh hiệu dành cho những Người bán có tỉ lệ phản hồi chat nhanh, đánh giá shop cao, tỉ lệ giao hàng thành công cao và ít bị tính điểm phạt Sao Quả Quạt.",
+    "expected_context": "article_01.json"
+  },
+  {
+    "question": "Người mua nhận được quyền lợi gì khi mua sắm tại Shop Yêu Thích?",
+    "expected_answer": "Sản phẩm được kiểm duyệt chất lượng, được tích lũy và sử dụng Shopee Xu khi thanh toán, và tăng cơ hội áp dụng Mã Miễn Phí Vận Chuyển Freeship Xtra.",
+    "expected_context": "article_01.json"
+  },
+  {
+    "question": "Làm thế nào để tìm kiếm sản phẩm bằng hình ảnh trên ứng dụng Shopee?",
+    "expected_answer": "Nhấn vào biểu tượng Máy ảnh cạnh thanh tìm kiếm, chụp ảnh sản phẩm thực tế hoặc chọn ảnh từ bộ nhớ điện thoại để Shopee quét và tìm sản phẩm tương tự.",
+    "expected_context": "article_02.json"
+  },
+  {
+    "question": "Các bộ lọc tìm kiếm nâng cao trên Shopee gồm những gì?",
+    "expected_answer": "Bao gồm bộ lọc Nơi bán (Hà Nội, TP.HCM, Nước ngoài), Đơn vị vận chuyển (Hỏa tốc, Nhanh, Tiết kiệm), Khoảng giá, và Đánh giá (từ 4 sao trở lên).",
+    "expected_context": "article_02.json"
+  },
+  {
+    "question": "Các loại Voucher chính trên Shopee bao gồm những loại nào?",
+    "expected_answer": "Bao gồm Mã Miễn Phí Vận Chuyển (Freeship Voucher), Mã Giảm Giá Shopee (Shopee Voucher), và Mã Giảm Giá Từ Shop (Shop Voucher).",
+    "expected_context": "article_03.json"
+  },
+  {
+    "question": "Các bước áp dụng mã giảm giá khi đặt hàng trên Shopee là gì?",
+    "expected_answer": "Chọn sản phẩm vào Giỏ hàng -> Chọn Shopee Voucher -> Áp dụng 1 Mã Freeship + 1 Mã Giảm Giá Shopee/Hoàn Xu -> Chọn Shop Voucher (nếu có) -> Nhấn Đồng ý và tiến hành thanh toán.",
+    "expected_context": "article_03.json"
+  },
+  {
+    "question": "Làm sao để giảm cước phí vận chuyển khi mua hàng trên Shopee?",
+    "expected_answer": "Nên chọn mua từ các Shop cùng Tỉnh/Thành phố, gộp nhiều mặt hàng trong cùng 1 Shop, và săn mã Freeship vào các Ngày Siêu Sale (9/9, 10/10, 15 hàng tháng).",
+    "expected_context": "article_04.json"
+  },
+  {
+    "question": "Ngành hàng Thực phẩm & Đồ uống yêu cầu những chứng từ pháp lý gì khi đăng bán?",
+    "expected_answer": "Yêu cầu Giấy chứng nhận an toàn thực phẩm và Giấy công bố hợp chuẩn hợp quy.",
+    "expected_context": "article_05.json"
+  },
+  {
+    "question": "Điều kiện để gửi yêu cầu Trả hàng / Hoàn tiền đối với đơn hàng là gì?",
+    "expected_answer": "Người mua chưa nhấn nút Đã nhận được hàng trên ứng dụng Shopee và đơn hàng vẫn còn trong thời hạn Bảo hộ Shopee (3 ngày shop thường, 15 ngày Shopee Mall).",
+    "expected_context": "article_06.json"
+  },
+  {
+    "question": "Quy trình thao tác gửi yêu cầu Trả hàng/Hoàn tiền trên ứng dụng Shopee như thế nào?",
+    "expected_answer": "Vào Tôi -> Đơn mua -> Chọn đơn hàng cần trả -> Nhấn Yêu cầu Trả hàng/Hoàn tiền -> Chọn lý do -> Tải ảnh/video bằng chứng (clip unbox) -> Nhấn Hoàn thành.",
+    "expected_context": "article_06.json"
   }
 ]
